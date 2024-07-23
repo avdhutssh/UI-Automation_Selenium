@@ -48,6 +48,13 @@ public class standAloneScripts {
 		driver.findElement(By.id("login-button")).click();
 	}
 
+	public static void fillCheckoutInfo(String fname, String lname, String postalCode) {
+		driver.findElement(By.id("first-name")).sendKeys(fname);
+		driver.findElement(By.id("last-name")).sendKeys(lname);
+		driver.findElement(By.id("postal-code")).sendKeys(postalCode);
+		driver.findElement(By.id("continue")).click();
+	}
+
 	@Test
 	public void _01_Validate_Incorrect_Login_Attempt() throws IOException {
 		// TO-DO can try with 3 combinations(Using excel reader) of wrong username and
@@ -64,6 +71,7 @@ public class standAloneScripts {
 
 	@Test
 	public void _02_Add_Highest_Priced_Product_To_Cart_And_Checkout() throws IOException {
+		// TO-DO: create functions to generate random names and postal code and enter
 		login("standard_user", "secret_sauce");
 		driver.findElement(By.className("product_sort_container")).sendKeys("Price (high to low)");
 		List<WebElement> cartBtns = wt.until(ExpectedConditions
@@ -71,11 +79,9 @@ public class standAloneScripts {
 		cartBtns.get(0).click();
 		driver.findElement(By.className("shopping_cart_link")).click();
 		driver.findElement(By.xpath("//button[normalize-space(text())='Checkout']")).click();
-		driver.findElement(By.id("first-name")).sendKeys("Av");
-		driver.findElement(By.id("last-name")).sendKeys("Vi");
-		driver.findElement(By.id("postal-code")).sendKeys("770988");
-		driver.findElement(By.id("continue")).click();
-		WebElement checkoutHeader = driver.findElement(By.cssSelector("span[class='title']"));
+		fillCheckoutInfo("Albus", "Severus", "9-3/4");
+		WebElement checkoutHeader = wt
+				.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("span[class='title']"))));
 		Assert.assertEquals(checkoutHeader.getText(), "Checkout: Overview");
 		driver.findElement(By.id("finish")).click();
 		WebElement confirmMsg = wt
