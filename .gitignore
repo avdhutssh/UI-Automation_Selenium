@@ -5,5 +5,6 @@
 *.gif
 *.html
 *.css
+*.iml
 target/
 test-output/
