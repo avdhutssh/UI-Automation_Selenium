@@ -103,5 +103,23 @@ public class standAloneScripts {
 		takePageSS("SA_HighestPriceProduct_OrderPlaced");
 	}
 
-
+	@Test
+	public void _03_Add_Specific_Product_To_Cart_And_Checkout() {
+		login("standard_user", "secret_sauce");
+		driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
+		// TO-DO: Here instead of xpath create a function and check the product name and
+		// click on add to cart button as per its index
+		takePageSS("ClickSpecificProduct");
+		driver.findElement(By.className("shopping_cart_link")).click();
+		driver.findElement(By.xpath("//button[normalize-space(text())='Checkout']")).click();
+		fillCheckoutInfo("Albus", "Severus", "9-3/4");
+		WebElement checkoutHeader = wt
+				.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("span[class='title']"))));
+		Assert.assertEquals(checkoutHeader.getText(), "Checkout: Overview");
+		driver.findElement(By.id("finish")).click();
+		WebElement confirmMsg = wt
+				.until(ExpectedConditions.visibilityOfElementLocated((By.className("complete-header"))));
+		Assert.assertEquals(confirmMsg.getText(), "Thank you for your order!");
+		takePageSS("SA_SpecificProduct_OrderPlaced");
+	}
 }
