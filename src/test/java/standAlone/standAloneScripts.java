@@ -109,7 +109,7 @@ public class standAloneScripts {
 		driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
 		// TO-DO: Here instead of xpath create a function and check the product name and
 		// click on add to cart button as per its index
-		takePageSS("ClickSpecificProduct");
+		takePageSS("SA_ClickSpecificProduct");
 		driver.findElement(By.className("shopping_cart_link")).click();
 		driver.findElement(By.xpath("//button[normalize-space(text())='Checkout']")).click();
 		fillCheckoutInfo("Albus", "Severus", "9-3/4");
@@ -121,5 +121,21 @@ public class standAloneScripts {
 				.until(ExpectedConditions.visibilityOfElementLocated((By.className("complete-header"))));
 		Assert.assertEquals(confirmMsg.getText(), "Thank you for your order!");
 		takePageSS("SA_SpecificProduct_OrderPlaced");
+	}
+
+	@Test
+	public void _04_Add_Specific_Product_To_Cart_Checkout_And_Verify_Cancel_Button_Functionality() {
+		login("standard_user", "secret_sauce");
+		driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
+		takePageSS("ClickSpecificProduct");
+		driver.findElement(By.className("shopping_cart_link")).click();
+		driver.findElement(By.xpath("//button[normalize-space(text())='Checkout']")).click();
+		fillCheckoutInfo("Albus", "Severus", "9-3/4");
+		WebElement title = wt.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".title")));
+		Assert.assertEquals(title.getText(), "Checkout: Overview");
+		driver.findElement(By.id("cancel")).click();
+		WebElement homePageTitle = wt.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".title")));
+		Assert.assertEquals(homePageTitle.getText(), "Products");
+		takePageSS("SA_After_Cancel_Btn_Click");
 	}
 }
