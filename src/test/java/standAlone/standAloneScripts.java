@@ -15,15 +15,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class standAloneScripts {
 	static WebDriver driver;
 	WebDriverWait wt;
 
-	@BeforeTest
+	@BeforeMethod
 	public void setUp() {
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -32,7 +32,7 @@ public class standAloneScripts {
 		driver.get("https://www.saucedemo.com/");
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void tearDown() {
 		driver.quit();
 	}
@@ -57,7 +57,7 @@ public class standAloneScripts {
 
 	@Test
 	public void _01_Validate_Incorrect_Login_Attempt() throws IOException {
-		// TO-DO can try with 3 combinations(Using excel reader) of wrong username and
+		// TO-DO: can try with 3 combinations(Using excel reader) of wrong username and
 		// pwd(w_user, c_pwd : c_user, w_pwd : w_user, w_pwd)
 		String expectedErrorMsg = "Epic sadface: Username and password do not match any user in this service";
 		driver.findElement(By.cssSelector("#user-name")).sendKeys("incorrect_user");
