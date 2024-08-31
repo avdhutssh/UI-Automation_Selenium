@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -22,6 +23,7 @@ import org.testng.annotations.Test;
 public class standAloneScripts {
 	static WebDriver driver;
 	WebDriverWait wt;
+	String productName = "Sauce Labs Backpack";
 
 	@BeforeMethod
 	public void setUp() {
@@ -37,9 +39,13 @@ public class standAloneScripts {
 		driver.quit();
 	}
 
-	public static void takePageSS(String fileName) throws IOException {
+	public static void takePageSS(String fileName) {
 		File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(srcFile, new File("ScreenShots/" + fileName + ".png"));
+		try {
+			FileUtils.copyFile(srcFile, new File("ScreenShots/" + fileName + ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void login(String userName, String pwd) {
@@ -55,8 +61,13 @@ public class standAloneScripts {
 		driver.findElement(By.id("continue")).click();
 	}
 
+	public static void SelectDropDown(WebElement ele, String value) {
+		Select ddl = new Select(ele);
+		ddl.selectByValue(value);
+	}
+
 	@Test
-	public void _01_Validate_Incorrect_Login_Attempt() throws IOException {
+	public void _01_Validate_Incorrect_Login_Attempt() {
 		// TO-DO: can try with 3 combinations(Using excel reader) of wrong username and
 		// pwd(w_user, c_pwd : c_user, w_pwd : w_user, w_pwd)
 		String expectedErrorMsg = "Epic sadface: Username and password do not match any user in this service";
@@ -70,13 +81,15 @@ public class standAloneScripts {
 	}
 
 	@Test
-	public void _02_Add_Highest_Priced_Product_To_Cart_And_Checkout() throws IOException {
+	public void _02_Add_Highest_Priced_Product_To_Cart_And_Checkout() {
 		// TO-DO: create functions to generate random names and postal code and enter
 		login("standard_user", "secret_sauce");
-		driver.findElement(By.className("product_sort_container")).sendKeys("Price (high to low)");
+		WebElement dropDown = driver.findElement(By.cssSelector(".product_sort_container"));
+		SelectDropDown(dropDown, "hilo");
 		List<WebElement> cartBtns = wt.until(ExpectedConditions
 				.visibilityOfAllElementsLocatedBy(By.xpath("//button[normalize-space(text())='Add to cart']")));
 		cartBtns.get(0).click();
+		takePageSS("ClickHighestPricedProduct");
 		driver.findElement(By.className("shopping_cart_link")).click();
 		driver.findElement(By.xpath("//button[normalize-space(text())='Checkout']")).click();
 		fillCheckoutInfo("Albus", "Severus", "9-3/4");
@@ -89,4 +102,6 @@ public class standAloneScripts {
 		Assert.assertEquals(confirmMsg.getText(), "Thank you for your order!");
 		takePageSS("SA_HighestPriceProduct_OrderPlaced");
 	}
+
+
 }
