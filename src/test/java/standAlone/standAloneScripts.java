@@ -138,4 +138,22 @@ public class standAloneScripts {
 		Assert.assertEquals(homePageTitle.getText(), "Products");
 		takePageSS("SA_After_Cancel_Btn_Click");
 	}
+
+	@Test
+	public void _05_Verify_Successful_Login_Attempt_For_All_Usernames_Given_On_Login_Page() {
+		// TO-DO: Use Dataprovider and decorator pattern for this
+		String[] usernames = { "standard_user", "problem_user", "performance_glitch_user", "error_user",
+				"visual_user" };
+		for (String username : usernames) {
+			driver.get("https://www.saucedemo.com/");
+			driver.findElement(By.id("user-name")).sendKeys(username);
+			driver.findElement(By.id("password")).sendKeys("secret_sauce");
+			driver.findElement(By.id("login-button")).click();
+			WebElement menuButton = wt
+					.until(ExpectedConditions.visibilityOfElementLocated(By.id("react-burger-menu-btn")));
+			Assert.assertTrue(menuButton.isDisplayed());
+			driver.findElement(By.id("react-burger-menu-btn")).click();
+			wt.until(ExpectedConditions.visibilityOfElementLocated(By.id("logout_sidebar_link"))).click();
+		}
+	}
 }
