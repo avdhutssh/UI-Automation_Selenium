@@ -2,6 +2,7 @@ package com.swag.labs.Utilities;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -165,5 +166,11 @@ public class ElementUtils extends BasePage {
 
     public void pressing(WebElement ele, Keys key) {
         ele.sendKeys(key);
+    }
+
+    public void pressKeyWithActions(Keys key) {
+        log.info("Pressing " + key.name() + " using Actions class");
+        Actions act = new Actions(driver);
+        act.sendKeys(key).perform();
     }
 }
