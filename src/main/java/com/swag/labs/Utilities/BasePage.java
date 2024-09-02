@@ -87,6 +87,21 @@ public class BasePage {
 
     }
 
+    public void waitTime(int wait) {
+        synchronized (driver) {
+            try {
+                if (wait > 0) {
+                    driver.wait(wait);
+                } else {
+                    System.err.println("Invalid wait time. Wait time should be a positive value.");
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                System.err.println("Wait operation was interrupted: " + e.getMessage());
+            }
+        }
+    }
+
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
         String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
