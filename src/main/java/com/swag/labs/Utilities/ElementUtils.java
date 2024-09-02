@@ -162,4 +162,8 @@ public class ElementUtils extends BasePage {
     public void switchToFrame(WebElement ele) {
         driver.switchTo().frame(ele);
     }
+
+    public void pressing(WebElement ele, Keys key) {
+        ele.sendKeys(key);
+    }
 }
