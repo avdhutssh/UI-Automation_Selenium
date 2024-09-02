@@ -155,13 +155,16 @@ public class BasePage {
                 throw new IllegalArgumentException("Unsupported locator type: " + locatorType);
         }
     }
-    
+
     protected void openUrl(String url) {
         driver.get(url);
     }
 
     public String getCurrentPageTitle() {
-		return driver.getTitle();
-	}
-    
+        return driver.getTitle();
+    }
+
+    public String getCurrentPageSource() {
+        return driver.getPageSource();
+    }
 }
