@@ -158,4 +158,8 @@ public class ElementUtils extends BasePage {
             System.err.println("Failed to handle the Alert" + e.getMessage());
         }
     }
+
+    public void switchToFrame(WebElement ele) {
+        driver.switchTo().frame(ele);
+    }
 }
