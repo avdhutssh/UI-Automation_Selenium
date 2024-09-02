@@ -77,7 +77,16 @@ public class BasePage {
             return false;
         }
     }
-    
+
+    public void waitForChildWindow(int windowNumber) {
+        try {
+            wait.until(ExpectedConditions.numberOfWindowsToBe(windowNumber));
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for the child window: " + e.getMessage());
+        }
+
+    }
+
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
         String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
