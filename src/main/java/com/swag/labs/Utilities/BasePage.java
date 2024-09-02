@@ -167,4 +167,9 @@ public class BasePage {
     public String getCurrentPageSource() {
         return driver.getPageSource();
     }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
 }
