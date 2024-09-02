@@ -1,10 +1,7 @@
 package com.swag.labs.Utilities;
 
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 public class ElementUtils extends BasePage {
 
@@ -68,6 +65,39 @@ public class ElementUtils extends BasePage {
                     String.format("Failed to switch to window number %s. The total number of open windows was %s.",
                             windowNumber, windowHandles.length),
                     ex);
+        }
+    }
+
+    public void enterText(WebElement element, String text) {
+        try {
+            element.sendKeys(text);
+        } catch (Exception e) {
+            System.err.println("Failed to enter text" + e.getMessage());
+        }
+    }
+
+    public void enterText(WebElement element, String text, boolean clear) {
+        try {
+            if (clear) {
+                element.clear();
+            }
+            element.sendKeys(text);
+        } catch (Exception e) {
+            System.err.println("Failed to enter text" + e.getMessage());
+        }
+    }
+
+    public void enterText(WebElement element, String text, boolean clear, boolean pressEnter) {
+        try {
+            if (clear) {
+                element.clear();
+            }
+            element.sendKeys(text);
+            if (pressEnter) {
+                element.sendKeys(Keys.ENTER);
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to enter text" + e.getMessage());
         }
     }
 }
