@@ -2,6 +2,7 @@ package com.swag.labs.Utilities;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Select;
 
 public class ElementUtils extends BasePage {
 
@@ -50,7 +51,7 @@ public class ElementUtils extends BasePage {
     }
 
     public void SwitchTowindow(int windowNumber) {
-        waitForChildWindow(i);
+        waitForChildWindow(windowNumber);
         String[] windowHandles = driver.getWindowHandles().stream().toArray(String[]::new);
         try {
             if (windowNumber > windowHandles.length) {
@@ -98,6 +99,23 @@ public class ElementUtils extends BasePage {
             }
         } catch (Exception e) {
             System.err.println("Failed to enter text" + e.getMessage());
+        }
+    }
+
+    public void selectDropdownOption(WebElement ele, String type, String selectValue) {
+        Select ddl = new Select(ele);
+        switch (type) {
+            case "text":
+                ddl.selectByVisibleText(selectValue);
+                break;
+            case "value":
+                ddl.selectByValue(selectValue);
+                break;
+            case "index":
+                ddl.selectByIndex(Integer.parseInt(selectValue));
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid selection type");
         }
     }
 }
