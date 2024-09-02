@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -172,4 +173,13 @@ public class BasePage {
         return driver.getCurrentUrl();
     }
 
+    /**
+     * Wait for specific ExpectedCondition for the given amount of time in seconds
+     */
+    private void waitFor(ExpectedCondition<WebElement> condition, Integer timeOutInSeconds) {
+        timeOutInSeconds = timeOutInSeconds != null ? timeOutInSeconds : 30;
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOutInSeconds));
+        wait.until(condition);
+    }
+    
 }
