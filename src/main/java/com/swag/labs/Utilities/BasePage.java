@@ -102,6 +102,17 @@ public class BasePage {
         }
     }
 
+    public void pageProcessingWait() {
+        try {
+            By processingMaskLocator = By.xpath("//div[@id='basicModal']/img");
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(processingMaskLocator));
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for page processing to complete: " + e.getMessage());
+        }
+
+    }
+
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
         String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
