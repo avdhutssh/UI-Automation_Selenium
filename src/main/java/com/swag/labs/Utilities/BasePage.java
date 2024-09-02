@@ -68,6 +68,15 @@ public class BasePage {
         }
         return webElement;
     }
+
+    public boolean waitForTextToBePresentInElement(WebElement element, String text) {
+        try {
+            return wait.until(ExpectedConditions.textToBePresentInElement(element, text));
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for text to be present in element: " + e.getMessage());
+            return false;
+        }
+    }
     
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
