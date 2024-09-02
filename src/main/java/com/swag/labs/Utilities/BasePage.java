@@ -160,4 +160,8 @@ public class BasePage {
         driver.get(url);
     }
 
+    public String getCurrentPageTitle() {
+		return driver.getTitle();
+	}
+    
 }
