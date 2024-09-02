@@ -2,11 +2,10 @@ package com.swag.labs.Utilities;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
+import java.util.function.Function;
 
 public class BasePage {
     protected WebDriver driver;
@@ -220,5 +219,17 @@ public class BasePage {
         }
         log.error("Element not displayed after " + timeoutInSeconds + " seconds: " + locator);
         return false;
+    }
+
+    public WebElement fluentWait(final By locator, int timeoutInSeconds, int pollingInMillis) {
+        Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(timeoutInSeconds))
+                .pollingEvery(Duration.ofMillis(pollingInMillis)).ignoring(NoSuchElementException.class);
+
+        WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+            public WebElement apply(WebDriver driver) {
+                return driver.findElement(locator);
+            }
+        });
+        return element;
     }
 }
