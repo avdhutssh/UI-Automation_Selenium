@@ -1,5 +1,6 @@
 package com.swag.labs.Utilities;
 
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,10 +11,12 @@ import java.time.Duration;
 public class BasePage {
     protected WebDriver driver;
     protected WebDriverWait wait;
+    protected Logger log;
 
-    public BasePage(WebDriver driver) {
+    public BasePage(WebDriver driver, Logger log) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.log = log;
     }
 
     public WebElement waitForElementClickable(WebElement ele) {
@@ -192,5 +195,30 @@ public class BasePage {
             }
             attempts++;
         }
+    }
+
+    //   Wait for element to be displayed
+    public boolean waitForElementToBeDisplayed(By locator, int timeoutInSeconds) {
+        log.info("Waiting for element to be displayed: " + locator);
+        int attempts = 0;
+        while (attempts < timeoutInSeconds) {
+            try {
+                if (driver.findElement(locator).isDisplayed()) {
+                    log.info("Element is displayed: " + locator);
+                    return true;
+                }
+            } catch (NoSuchElementException e) {
+                log.debug("Element not found: " + locator + ", attempt: " + attempts);
+            }
+            try {
+                Thread.sleep(1000); // Wait for 1 second before next attempt
+            } catch (InterruptedException e) {
+                log.error("InterruptedException during wait", e);
+                Thread.currentThread().interrupt(); // Restore interrupted status
+            }
+            attempts++;
+        }
+        log.error("Element not displayed after " + timeoutInSeconds + " seconds: " + locator);
+        return false;
     }
 }
