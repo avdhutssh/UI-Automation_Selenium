@@ -2,6 +2,7 @@ package com.swag.labs.Utilities;
 
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -16,6 +17,21 @@ public class ElementUtils extends BasePage {
         this.driver = driver;
         this.log = log;
         this.js = (JavascriptExecutor) driver;
+    }
+
+    public static WebElement findElement(WebElement we) {
+        WebElement element = null;
+        int attempts = 0;
+        while (attempts < 2) {
+            try {
+                element = we;
+                break;
+            } catch (StaleElementReferenceException e) {
+                e.printStackTrace();
+            }
+            attempts++;
+        }
+        return element;
     }
 
     public void clickOnElement(WebElement element) {
