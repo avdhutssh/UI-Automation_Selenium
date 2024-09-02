@@ -3,6 +3,7 @@ package com.swag.labs.Utilities;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class ElementUtils extends BasePage {
 
@@ -119,10 +120,16 @@ public class ElementUtils extends BasePage {
         }
     }
 
+    public Alert switchToAlert() {
+        waitForAlert();
+        return driver.switchTo().alert();
+    }
+
     public void handleAlert(String expectedText, String promt) {
         try {
-            waitForAlert();
-            Alert alert = driver.switchTo().alert();
+            Alert alert = switchToAlert();
+            String actualText = alert.getText();
+            Assert.assertEquals(actualText, expectedText);
             if (promt.equals("accept")) {
                 alert.accept();
             } else {
