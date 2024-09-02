@@ -118,4 +118,18 @@ public class ElementUtils extends BasePage {
                 throw new IllegalArgumentException("Invalid selection type");
         }
     }
+
+    public void handleAlert(String expectedText, String promt) {
+        try {
+            waitForAlert();
+            Alert alert = driver.switchTo().alert();
+            if (promt.equals("accept")) {
+                alert.accept();
+            } else {
+                alert.dismiss();
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to handle the Alert" + e.getMessage());
+        }
+    }
 }
