@@ -35,7 +35,7 @@
 │   │   │   ├── 3. Components/                 # Create component classes following SRP principle
 │   └── resources/                             # Configuration files (e.g., log4j.properties)
 │       ├── log4j.xml          # Log4j configuration file
-│       ├── app.properties     # Application data like URL, username, password, and browser to use
+│       ├── config.properties     # Application data like URL, username, password, and browser to use
 ├── test/
 │   ├── java/
 │   │   ├── com.swag.labs/
