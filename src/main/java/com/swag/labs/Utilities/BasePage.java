@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -16,6 +17,7 @@ public class BasePage {
     public BasePage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        PageFactory.initElements(driver, this);
     }
 
     public WebElement waitForElementClickable(WebElement ele) {
@@ -123,7 +125,11 @@ public class BasePage {
         }
 
     }
-    
+
+    public void isElementDisplayed(WebElement ele) {
+        wait.until((d) -> ele.isDisplayed());
+    }
+
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
         String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
