@@ -5,6 +5,9 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import java.util.Iterator;
+import java.util.Set;
+
 public class ElementUtils extends BasePage {
 
     protected WebDriver driver;
@@ -67,6 +70,22 @@ public class ElementUtils extends BasePage {
                     String.format("Failed to switch to window number %s. The total number of open windows was %s.",
                             windowNumber, windowHandles.length),
                     ex);
+        }
+    }
+
+    public void SwitchTowindow(String expectedTitle) {
+        String parentWindow = driver.getWindowHandle();
+        Set<String> allwindows = driver.getWindowHandles();
+
+        Iterator<String> windowsIterator = allwindows.iterator();
+        while (windowsIterator.hasNext()) {
+            String windowHandle = windowsIterator.next().toString();
+            if (!windowHandle.equals(parentWindow)) {
+                driver.switchTo().window(windowHandle);
+                if (getCurrentPageTitle().equals(expectedTitle)) {
+                    break;
+                }
+            }
         }
     }
 
