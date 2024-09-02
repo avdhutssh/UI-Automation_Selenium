@@ -48,5 +48,43 @@ public class BasePage {
         return webElement;
     }
 
-    
+    public WebElement waitForElementPresence(WebElement element) {
+        WebElement webElement = null;
+        try {
+            By locator = getLocatorFromWebElement(element);
+            webElement = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for element to be present: " + e.getMessage());
+        }
+        return webElement;
+    }
+
+    private By getLocatorFromWebElement(WebElement element) {
+        String elementDescription = element.toString();
+        String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
+        String locatorType = locatorString.substring(0, locatorString.indexOf(":"));
+        String locatorValue = locatorString.substring(locatorString.indexOf(":") + 1).trim();
+
+        switch (locatorType) {
+            case "id":
+                return By.id(locatorValue);
+            case "name":
+                return By.name(locatorValue);
+            case "className":
+                return By.className(locatorValue);
+            case "tagName":
+                return By.tagName(locatorValue);
+            case "linkText":
+                return By.linkText(locatorValue);
+            case "partialLinkText":
+                return By.partialLinkText(locatorValue);
+            case "cssSelector":
+                return By.cssSelector(locatorValue);
+            case "xpath":
+                return By.xpath(locatorValue);
+            default:
+                throw new IllegalArgumentException("Unsupported locator type: " + locatorType);
+        }
+    }
+
 }
