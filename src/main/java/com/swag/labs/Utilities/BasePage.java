@@ -59,6 +59,16 @@ public class BasePage {
         return webElement;
     }
 
+    public Boolean waitForElementInvisible(WebElement ele) {
+        Boolean webElement = null;
+        try {
+            webElement = wait.until(ExpectedConditions.invisibilityOf(ele));
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for element to be present: " + e.getMessage());
+        }
+        return webElement;
+    }
+    
     private By getLocatorFromWebElement(WebElement element) {
         String elementDescription = element.toString();
         String locatorString = elementDescription.substring(elementDescription.indexOf("-> ") + 3);
