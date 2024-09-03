@@ -199,4 +199,10 @@ public class ElementUtils extends BasePage {
         jsExecutor.executeScript(script, element);
     }
 
+    public void setCookie(Cookie ck) {
+        log.info("Adding cookie " + ck.getName());
+        driver.manage().addCookie(ck);
+        log.info("Cookie added");
+    }
+
 }
