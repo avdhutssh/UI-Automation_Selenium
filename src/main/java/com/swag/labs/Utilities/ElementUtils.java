@@ -183,4 +183,8 @@ public class ElementUtils extends BasePage {
         js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
     }
 
+    public void performDragAndDrop(WebElement from, WebElement to) {
+        act.dragAndDrop(from, to).perform();
+    }
+
 }
