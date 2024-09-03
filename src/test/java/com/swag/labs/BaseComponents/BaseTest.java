@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 
 import java.lang.reflect.Method;
 import java.util.Properties;
@@ -22,12 +21,14 @@ public class BaseTest {
 
     protected Properties prop = new ConfigurationUtils().getProperty();
 
-
-    @Parameters({"browser"})
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, ITestContext ctx) {
         log = LogManager.getLogger(testName);
-        String browser = prop.getProperty("browser", "chrome");
+        String browser = prop.getProperty("browser", "chrome").toLowerCase();
+        boolean isHeadless = Boolean.parseBoolean(prop.getProperty("headless", "false"));
+        if (isHeadless) {
+            browser += "headless";
+        }
         BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
         driver = factory.createDriver();
         driver.manage().window().maximize();
