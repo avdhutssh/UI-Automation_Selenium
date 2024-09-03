@@ -205,4 +205,8 @@ public class ElementUtils extends BasePage {
         log.info("Cookie added");
     }
 
+    public String getCookie(String name) {
+        log.info("Getting value of cookie " + name);
+        return driver.manage().getCookieNamed(name).getValue();
+    }
 }
