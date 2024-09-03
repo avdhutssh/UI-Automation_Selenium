@@ -11,6 +11,10 @@ public class TestUtils extends BaseTest {
         return (new SimpleDateFormat("yyyyMMdd").format(new Date()));
     }
 
+    private static String getSystemTime() {
+        return (new SimpleDateFormat("HHmmssSSS").format(new Date()));
+    }
+
     //static sleep
     protected void sleep(long millis) {
         try {
@@ -20,5 +24,5 @@ public class TestUtils extends BaseTest {
         }
     }
 
-
+    
 }
