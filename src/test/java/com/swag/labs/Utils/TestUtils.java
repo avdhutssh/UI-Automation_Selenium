@@ -4,11 +4,14 @@ import com.swag.labs.BaseComponents.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class TestUtils extends BaseTest {
 
@@ -41,4 +44,8 @@ public class TestUtils extends BaseTest {
         }
     }
 
+    protected List<LogEntry> getBrowserLogs() {
+        LogEntries log = driver.manage().logs().get("browser");
+        return log.getAll();
+    }
 }
