@@ -58,4 +58,18 @@ public class BrowserDriverFactory {
         return driver.get();
     }
 
+    public WebDriver createChromeWithProfile(String profile) {
+        log.info("Starting chrome driver with profile: " + profile);
+        ChromeOptions chromeOptions = getChromeOptions();
+        chromeOptions.addArguments("user-data-dir=src/main/resources/Profiles/" + profile);
+        driver.set(new ChromeDriver(chromeOptions));
+        return driver.get();
+    }
+
+
+
+    private ChromeOptions getChromeOptions() {
+        ChromeOptions options = new ChromeOptions();
+        return options;
+    }
 }
