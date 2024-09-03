@@ -187,4 +187,7 @@ public class ElementUtils extends BasePage {
         act.dragAndDrop(from, to).perform();
     }
 
+    public void hoverOverElement(WebElement element) {
+        act.moveToElement(element).perform();
+    }
 }
