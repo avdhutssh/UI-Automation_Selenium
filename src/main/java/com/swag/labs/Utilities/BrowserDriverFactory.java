@@ -66,7 +66,15 @@ public class BrowserDriverFactory {
         return driver.get();
     }
 
-
+    public WebDriver createChromeWithMobileEmulation(String deviceName) {
+        log.info("Starting driver with " + deviceName + " emulation]");
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", deviceName);
+        ChromeOptions chromeOptions = getChromeOptions();
+        chromeOptions.setExperimentalOption("mobileEmulation", mobileEmulation);
+        driver.set(new ChromeDriver(chromeOptions));
+        return driver.get();
+    }
 
     private ChromeOptions getChromeOptions() {
         ChromeOptions options = new ChromeOptions();
