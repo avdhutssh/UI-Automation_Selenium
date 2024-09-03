@@ -1,22 +1,17 @@
-package com.swag.labs.Utilities;
+package com.swag.labs.Utils;
 
-import com.swag.labs.PageObjects.CartPage;
-import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import com.swag.labs.BaseComponents.BaseTest;
 
-import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class TestUtils extends CartPage {
+public class TestUtils extends BaseTest {
 
-    WebDriver driver;
-
-    public TestUtils(WebDriver driver, Logger log) {
-        super(driver, log);
-        this.driver = driver;
+    private static String getTodaysDate() {
+        return (new SimpleDateFormat("yyyyMMdd").format(new Date()));
     }
 
+    //static sleep
     protected void sleep(long millis) {
         try {
             Thread.sleep(millis);
@@ -25,11 +20,5 @@ public class TestUtils extends CartPage {
         }
     }
 
-    protected void takeScreenshot(String fileName) {
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String path = System.getProperty("user.dir") + File.separator + "screenshots"
-                + File.separator + getTodaysDate() + File.separator + testSuiteName + File.separator + testName
-                + File.separator + testMethodName + File.separator + getSystemTime() + " " + fileName + ".png";
-    }
 
 }
