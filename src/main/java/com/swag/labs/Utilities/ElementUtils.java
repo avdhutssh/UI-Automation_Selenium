@@ -14,12 +14,14 @@ public class ElementUtils extends BasePage {
     protected WebDriver driver;
     protected Logger log;
     protected JavascriptExecutor js;
+    protected Actions act;
 
     public ElementUtils(WebDriver driver, Logger log) {
         super(driver, log);
         this.driver = driver;
         this.log = log;
         this.js = (JavascriptExecutor) driver;
+        this.act = new Actions(driver);
     }
 
     public static WebElement findElement(WebElement we) {
@@ -53,6 +55,10 @@ public class ElementUtils extends BasePage {
         } catch (Exception e) {
             System.err.println("Exception occurred: " + e.getMessage());
         }
+    }
+
+    public void clickOnElementAction(WebElement ele) {
+        act.moveToElement(ele).click().build().perform();
     }
 
     public void SwitchTowindow(int windowNumber) {
@@ -164,13 +170,17 @@ public class ElementUtils extends BasePage {
         driver.switchTo().frame(ele);
     }
 
-    public void pressing(WebElement ele, Keys key) {
+    public void pressKey(WebElement ele, Keys key) {
         ele.sendKeys(key);
     }
 
     public void pressKeyWithActions(Keys key) {
         log.info("Pressing " + key.name() + " using Actions class");
-        Actions act = new Actions(driver);
         act.sendKeys(key).perform();
     }
+
+    public void scrollToBottom() {
+        js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+    }
+
 }
