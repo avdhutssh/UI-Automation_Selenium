@@ -190,4 +190,13 @@ public class ElementUtils extends BasePage {
     public void hoverOverElement(WebElement element) {
         act.moveToElement(element).perform();
     }
+
+    public void hoverOverElementJS(WebElement element) {
+        String script = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', \n"
+                + "\n"
+                + "true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript(script, element);
+    }
+
 }
