@@ -22,7 +22,7 @@
 │   │   │   │   ├── JSONDataReader.java        # Utility class for reading JSON files
 │   │   │   │   ├── ElementUtils.java          # Utility class for common web element actions
 │   │   │   │   ├── ConfigurationUtils.java    # Utility class for configuration management (app.properties file read)
-│   │   │   │   ├── TestUtils.java             # Utility class for common functions used by page functions like taking screenshots, getting browser logs, and getting the current date
+│   │   │   │   ├── TestUtils.java             # Utility class for common functions used by page functions like taking screenshots, getting browser logs, switch to window and getting the current date
 │   │   │   │   ├── ExtentReporter.java        # Utility class for implementing extent reports
 │   │   │   │   ├── BasePage.java              # Parent utility class for all utils classes, defining WebDriver and Wait instances for further use
 │   │   │   ├── 2. PageObjects/                # Page Object classes
