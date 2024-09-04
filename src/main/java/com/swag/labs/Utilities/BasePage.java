@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
+import java.util.Properties;
 import java.util.function.Function;
 
 public class BasePage {
@@ -12,13 +13,15 @@ public class BasePage {
     protected WebDriverWait wait;
     protected Logger log;
 
-    public BasePage(WebDriver driver, Logger log) {
+    protected Properties prop = new ConfigurationUtils().getProperty();
+
+    protected BasePage(WebDriver driver, Logger log) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         this.log = log;
     }
 
-    public WebElement waitForElementClickable(WebElement ele) {
+    protected WebElement waitForElementClickable(WebElement ele) {
         WebElement webElement = null;
         try {
             webElement = wait.until(ExpectedConditions.elementToBeClickable(ele));
@@ -28,17 +31,16 @@ public class BasePage {
         return webElement;
     }
 
-    public WebElement waitForElementVisible(WebElement ele) {
-        WebElement webElement = null;
+    protected WebElement waitForElementVisible(WebElement ele) {
         try {
-            wait.until(ExpectedConditions.visibilityOf(ele));
+            return wait.until(ExpectedConditions.visibilityOf(ele));
         } catch (TimeoutException e) {
-            System.err.println("Timeout occurred while waiting for element to be visible: " + e.getMessage());
+            log.error("Timeout occurred while waiting for element to be visible: " + e.getMessage());
+            throw new NoSuchElementException("Element not found: " + ele);
         }
-        return webElement;
     }
-
-    public WebElement waitForElementPresence(By locator) {
+    
+    protected WebElement waitForElementPresence(By locator) {
         WebElement webElement = null;
         try {
             webElement = wait.until(ExpectedConditions.presenceOfElementLocated(locator));
@@ -48,7 +50,7 @@ public class BasePage {
         return webElement;
     }
 
-    public WebElement waitForElementPresence(WebElement element) {
+    protected WebElement waitForElementPresence(WebElement element) {
         WebElement webElement = null;
         try {
             By locator = getLocatorFromWebElement(element);
@@ -59,7 +61,7 @@ public class BasePage {
         return webElement;
     }
 
-    public Boolean waitForElementInvisible(WebElement ele) {
+    protected Boolean waitForElementInvisible(WebElement ele) {
         Boolean webElement = null;
         try {
             webElement = wait.until(ExpectedConditions.invisibilityOf(ele));
@@ -69,7 +71,7 @@ public class BasePage {
         return webElement;
     }
 
-    public boolean waitForTextToBePresentInElement(WebElement element, String text) {
+    protected boolean waitForTextToBePresentInElement(WebElement element, String text) {
         try {
             return wait.until(ExpectedConditions.textToBePresentInElement(element, text));
         } catch (TimeoutException e) {
@@ -78,7 +80,7 @@ public class BasePage {
         }
     }
 
-    public void waitForChildWindow(int windowNumber) {
+    protected void waitForChildWindow(int windowNumber) {
         try {
             wait.until(ExpectedConditions.numberOfWindowsToBe(windowNumber));
         } catch (TimeoutException e) {
@@ -87,7 +89,16 @@ public class BasePage {
 
     }
 
-    public void waitTime(int wait) {
+    protected void waitForAlert() {
+        try {
+            wait.until(ExpectedConditions.alertIsPresent());
+        } catch (TimeoutException e) {
+            System.err.println("Timeout occurred while waiting for the alert: " + e.getMessage());
+        }
+
+    }
+
+    protected void waitTime(int wait) {
         synchronized (driver) {
             try {
                 if (wait > 0) {
@@ -102,7 +113,7 @@ public class BasePage {
         }
     }
 
-    public void pageProcessingWait() {
+    protected void pageProcessingWait() {
         try {
             By processingMaskLocator = By.xpath("//div[@id='basicModal']/img");
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -113,7 +124,7 @@ public class BasePage {
 
     }
 
-    public void visibilityOfProcessingMask() {
+    protected void visibilityOfProcessingMask() {
         try {
             By processingMaskLocator = By.xpath("//div[@id='basicModal']/img");
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -124,7 +135,7 @@ public class BasePage {
 
     }
 
-    public void isElementDisplayed(WebElement ele) {
+    protected void isElementDisplayed(WebElement ele) {
         wait.until((d) -> ele.isDisplayed());
     }
 
@@ -160,15 +171,15 @@ public class BasePage {
         driver.get(url);
     }
 
-    public String getCurrentPageTitle() {
+    protected String getCurrentPageTitle() {
         return driver.getTitle();
     }
 
-    public String getCurrentPageSource() {
+    protected String getCurrentPageSource() {
         return driver.getPageSource();
     }
 
-    public String getCurrentUrl() {
+    protected String getCurrentUrl() {
         return driver.getCurrentUrl();
     }
 
@@ -197,7 +208,7 @@ public class BasePage {
     }
 
     //   Wait for element to be displayed
-    public boolean waitForElementToBeDisplayed(By locator, int timeoutInSeconds) {
+    protected boolean waitForElementToBeDisplayed(By locator, int timeoutInSeconds) {
         log.info("Waiting for element to be displayed: " + locator);
         int attempts = 0;
         while (attempts < timeoutInSeconds) {
@@ -221,7 +232,7 @@ public class BasePage {
         return false;
     }
 
-    public WebElement fluentWait(final By locator, int timeoutInSeconds, int pollingInMillis) {
+    protected WebElement fluentWait(final By locator, int timeoutInSeconds, int pollingInMillis) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(timeoutInSeconds))
                 .pollingEvery(Duration.ofMillis(pollingInMillis)).ignoring(NoSuchElementException.class);
 
