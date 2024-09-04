@@ -13,6 +13,8 @@ public class CheckoutOverviewPage extends ElementUtils {
     WebElement label_header;
     @FindBy(id = "finish")
     WebElement btn_finish;
+    @FindBy(id = "cancel")
+    WebElement btn_cancel;
     private WebDriver driver;
 
     public CheckoutOverviewPage(WebDriver driver, Logger log) {
@@ -30,4 +32,8 @@ public class CheckoutOverviewPage extends ElementUtils {
         return new CheckoutCompletePage(driver, log);
     }
 
+    public ProductsPage ClickOnCancelBtn() {
+        waitForElementClickable(this.btn_cancel).click();
+        return new ProductsPage(driver, log);
+    }
 }
