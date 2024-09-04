@@ -9,7 +9,7 @@ public class ConfigurationUtils {
 
     public Properties getProperty() {
         Properties prop = new Properties();
-        File propFile = new File(System.getProperty("user.dir") + "\\src\\main\\java\\resources\\config.properties");
+        File propFile = new File(System.getProperty("user.dir") + "\\src\\main\\resources\\config.properties");
 
         if (propFile.exists()) {
             try (FileInputStream fis = new FileInputStream(propFile)) {
