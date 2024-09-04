@@ -1,5 +1,6 @@
 package com.swag.labs.BaseComponents;
 
+import com.swag.labs.PageObjects.LoginPage;
 import com.swag.labs.Utilities.BrowserDriverFactory;
 import com.swag.labs.Utilities.ConfigurationUtils;
 import org.apache.logging.log4j.LogManager;
@@ -13,13 +14,14 @@ import java.lang.reflect.Method;
 import java.util.Properties;
 
 public class BaseTest {
-    protected WebDriver driver;
+    public WebDriver driver;
     protected Logger log;
     protected String testSuiteName;
     protected String testName;
     protected String testMethodName;
 
     protected Properties prop = new ConfigurationUtils().getProperty();
+    public LoginPage loginPage;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, ITestContext ctx) {
@@ -35,6 +37,7 @@ public class BaseTest {
         this.testName = ctx.getCurrentXmlTest().getName();
         this.testSuiteName = ctx.getSuite().getName();
         this.testMethodName = method.getName();
+        this.loginPage = new LoginPage(driver, log);
     }
 
     @AfterMethod(alwaysRun = true)
