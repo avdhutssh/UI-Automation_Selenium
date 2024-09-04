@@ -9,15 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends ElementUtils {
 
-    String url = (prop.getProperty("url"));
-    String userName = (prop.getProperty("loginId"));
-    String password = (prop.getProperty("password"));
+    private String url = (prop.getProperty("url"));
+    private String userName = (prop.getProperty("loginId"));
+    private String password = (prop.getProperty("password"));
     @FindBy(css = "#user-name")
-    WebElement txt_username;
+    private WebElement txt_username;
     @FindBy(css = "#password")
-    WebElement txt_pwd;
+    private WebElement txt_pwd;
     @FindBy(id = "login-button")
-    WebElement btn_login;
+    private WebElement btn_login;
     private WebDriver driver;
 
     public LoginPage(WebDriver driver, Logger log) {
@@ -27,6 +27,7 @@ public class LoginPage extends ElementUtils {
     }
 
     public ProductsPage login() {
+        driver.get(url);
         waitForElementVisible(this.txt_username).sendKeys(this.userName);
         waitForElementVisible(this.txt_pwd).sendKeys(this.password);
         waitForElementClickable(this.btn_login).click();
