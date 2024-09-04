@@ -11,6 +11,9 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 public class ProductsPage extends ElementUtils {
+
+    @FindBy(css = ".title")
+    private WebElement label_ProductHeader;
     @FindBy(css = ".product_sort_container")
     private WebElement label_productSort;
     @FindBy(xpath = "//button[normalize-space(text())='Add to cart']")
@@ -42,6 +45,10 @@ public class ProductsPage extends ElementUtils {
         driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
     }
 
+    public String getProductsPageTitle() {
+        return waitForElementVisible(this.label_ProductHeader).getText();
+    }
+    
     public CartPage navigateToCartPage() {
         this.label_cart.click();
         return new CartPage(driver, log);
