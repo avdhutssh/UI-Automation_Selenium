@@ -18,6 +18,8 @@ public class LoginPage extends ElementUtils {
     private WebElement txt_pwd;
     @FindBy(id = "login-button")
     private WebElement btn_login;
+    @FindBy(css = "[data-test='error']")
+    private WebElement label_errorMsg;
     private WebDriver driver;
 
     public LoginPage(WebDriver driver, Logger log) {
@@ -35,9 +37,13 @@ public class LoginPage extends ElementUtils {
     }
 
     public void loginWithUserInfo(String userName, String pwd) {
+        driver.get(url);
         waitForElementVisible(this.txt_username).sendKeys(userName);
         waitForElementVisible(this.txt_pwd).sendKeys(pwd);
         waitForElementClickable(this.btn_login).click();
     }
 
+    public String getErrorMsg() {
+        return waitForElementVisible(this.label_errorMsg).getText();
+    }
 }
