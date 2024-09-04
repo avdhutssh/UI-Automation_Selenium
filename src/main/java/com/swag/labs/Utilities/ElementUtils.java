@@ -16,7 +16,7 @@ public class ElementUtils extends BasePage {
     protected JavascriptExecutor js;
     protected Actions act;
 
-    public ElementUtils(WebDriver driver, Logger log) {
+    protected ElementUtils(WebDriver driver, Logger log) {
         super(driver, log);
         this.driver = driver;
         this.log = log;
@@ -24,7 +24,7 @@ public class ElementUtils extends BasePage {
         this.act = new Actions(driver);
     }
 
-    public static WebElement findElement(WebElement we) {
+    protected static WebElement findElement(WebElement we) {
         WebElement element = null;
         int attempts = 0;
         while (attempts < 2) {
@@ -39,7 +39,7 @@ public class ElementUtils extends BasePage {
         return element;
     }
 
-    public void clickOnElement(WebElement element) {
+    protected void clickOnElement(WebElement element) {
         WebElement webElement = waitForElementClickable(element);
         try {
             webElement.click();
@@ -49,7 +49,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void clickOnElementJS(WebElement ele) {
+    protected void clickOnElementJS(WebElement ele) {
         try {
             js.executeScript("arguments[0].click()", ele);
         } catch (Exception e) {
@@ -57,11 +57,11 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void clickOnElementAction(WebElement ele) {
+    protected void clickOnElementAction(WebElement ele) {
         act.moveToElement(ele).click().build().perform();
     }
 
-    public void SwitchTowindow(int windowNumber) {
+    protected void SwitchTowindow(int windowNumber) {
         waitForChildWindow(windowNumber);
         String[] windowHandles = driver.getWindowHandles().stream().toArray(String[]::new);
         try {
@@ -80,7 +80,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void SwitchTowindow(String expectedTitle) {
+    protected void SwitchTowindow(String expectedTitle) {
         String parentWindow = driver.getWindowHandle();
         Set<String> allwindows = driver.getWindowHandles();
 
@@ -96,7 +96,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void enterText(WebElement element, String text) {
+    protected void enterText(WebElement element, String text) {
         try {
             element.sendKeys(text);
         } catch (Exception e) {
@@ -104,7 +104,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void enterText(WebElement element, String text, boolean clear) {
+    protected void enterText(WebElement element, String text, boolean clear) {
         try {
             if (clear) {
                 element.clear();
@@ -115,7 +115,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void enterText(WebElement element, String text, boolean clear, boolean pressEnter) {
+    protected void enterText(WebElement element, String text, boolean clear, boolean pressEnter) {
         try {
             if (clear) {
                 element.clear();
@@ -129,7 +129,7 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void selectDropdownOption(WebElement ele, String type, String selectValue) {
+    protected void selectDropdownOption(WebElement ele, String type, String selectValue) {
         Select ddl = new Select(ele);
         switch (type) {
             case "text":
@@ -146,12 +146,12 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public Alert switchToAlert() {
+    protected Alert switchToAlert() {
         waitForAlert();
         return driver.switchTo().alert();
     }
 
-    public void handleAlert(String expectedText, String promt) {
+    protected void handleAlert(String expectedText, String promt) {
         try {
             Alert alert = switchToAlert();
             String actualText = alert.getText();
@@ -166,32 +166,32 @@ public class ElementUtils extends BasePage {
         }
     }
 
-    public void switchToFrame(WebElement ele) {
+    protected void switchToFrame(WebElement ele) {
         driver.switchTo().frame(ele);
     }
 
-    public void pressKey(WebElement ele, Keys key) {
+    protected void pressKey(WebElement ele, Keys key) {
         ele.sendKeys(key);
     }
 
-    public void pressKeyWithActions(Keys key) {
+    protected void pressKeyWithActions(Keys key) {
         log.info("Pressing " + key.name() + " using Actions class");
         act.sendKeys(key).perform();
     }
 
-    public void scrollToBottom() {
+    protected void scrollToBottom() {
         js.executeScript("window.scrollTo(0,document.body.scrollHeight)");
     }
 
-    public void performDragAndDrop(WebElement from, WebElement to) {
+    protected void performDragAndDrop(WebElement from, WebElement to) {
         act.dragAndDrop(from, to).perform();
     }
 
-    public void hoverOverElement(WebElement element) {
+    protected void hoverOverElement(WebElement element) {
         act.moveToElement(element).perform();
     }
 
-    public void hoverOverElementJS(WebElement element) {
+    protected void hoverOverElementJS(WebElement element) {
         String script = "if(document.createEvent){var evObj = document.createEvent('MouseEvents');evObj.initEvent('mouseover', \n"
                 + "\n"
                 + "true, false); arguments[0].dispatchEvent(evObj);} else if(document.createEventObject) { arguments[0].fireEvent('onmouseover');}";
@@ -199,13 +199,13 @@ public class ElementUtils extends BasePage {
         jsExecutor.executeScript(script, element);
     }
 
-    public void setCookie(Cookie ck) {
+    protected void setCookie(Cookie ck) {
         log.info("Adding cookie " + ck.getName());
         driver.manage().addCookie(ck);
         log.info("Cookie added");
     }
 
-    public String getCookie(String name) {
+    protected String getCookie(String name) {
         log.info("Getting value of cookie " + name);
         return driver.manage().getCookieNamed(name).getValue();
     }
