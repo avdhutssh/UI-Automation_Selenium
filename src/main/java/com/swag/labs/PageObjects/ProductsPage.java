@@ -66,9 +66,9 @@ public class ProductsPage extends ElementUtils {
         return new CartPage(driver, log);
     }
 
-    public void logout() {
-        waitForElementVisible(this.section_Menu).click();
-        waitForElementVisible(this.label_logout).click();
-    }
+//    public void logout() {
+//        waitForElementVisible(this.section_Menu).click();
+//        waitForElementVisible(this.label_logout).click();
+//    }
 
 }
