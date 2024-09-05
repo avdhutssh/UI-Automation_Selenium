@@ -20,6 +20,10 @@ public class LoginPage extends ElementUtils {
     private WebElement btn_login;
     @FindBy(css = "[data-test='error']")
     private WebElement label_errorMsg;
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement section_Menu;
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement label_logout;
     private WebDriver driver;
 
     public LoginPage(WebDriver driver, Logger log) {
@@ -43,7 +47,16 @@ public class LoginPage extends ElementUtils {
         waitForElementClickable(this.btn_login).click();
     }
 
+    public boolean VerifyErrorMsgIsGettingDisplayed() {
+        return waitForElementVisible(this.label_errorMsg).isDisplayed();
+    }
+
     public String getErrorMsg() {
         return waitForElementVisible(this.label_errorMsg).getText();
+    }
+
+    public void logout() {
+        waitForElementVisible(this.section_Menu).click();
+        waitForElementVisible(this.label_logout).click();
     }
 }
