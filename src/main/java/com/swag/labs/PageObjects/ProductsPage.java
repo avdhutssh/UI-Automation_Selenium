@@ -2,7 +2,6 @@ package com.swag.labs.PageObjects;
 
 import com.swag.labs.Utilities.ElementUtils;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +23,9 @@ public class ProductsPage extends ElementUtils {
     private WebElement section_Menu;
     @FindBy(id = "logout_sidebar_link")
     private WebElement label_logout;
+    @FindBy(css = ".inventory_item_name")
+    private List<WebElement> label_productNames;
+
     private WebDriver driver;
 
     public ProductsPage(WebDriver driver, Logger log) {
@@ -43,8 +45,16 @@ public class ProductsPage extends ElementUtils {
         selectDropdownOption(this.label_productSort, "value", value);
     }
 
+//    public void clickOnProductAddToCartButton(String productName) {
+//        driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
+//    }
+
     public void clickOnProductAddToCartButton(String productName) {
-        driver.findElement(By.xpath("//*[normalize-space(text())='" + productName + "']/../../..//button")).click();
+        for (int i = 0; i < this.label_productNames.size(); i++) {
+            if (this.label_productNames.get(i).getText().equalsIgnoreCase(productName)) {
+                this.btn_AddToCart.get(i).click();
+            }
+        }
     }
 
     public String getProductsPageTitle() {
@@ -56,9 +66,9 @@ public class ProductsPage extends ElementUtils {
         return new CartPage(driver, log);
     }
 
-    public void logout() {
-        waitForElementVisible(this.section_Menu).click();
-        waitForElementVisible(this.label_logout).click();
-    }
+//    public void logout() {
+//        waitForElementVisible(this.section_Menu).click();
+//        waitForElementVisible(this.label_logout).click();
+//    }
 
 }

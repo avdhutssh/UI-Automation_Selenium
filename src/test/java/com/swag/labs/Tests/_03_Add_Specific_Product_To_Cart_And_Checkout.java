@@ -12,10 +12,10 @@ public class _03_Add_Specific_Product_To_Cart_And_Checkout extends BaseTest {
     String productName = "Sauce Labs Backpack";
 
     @Test
-    public void Add_Highest_Priced_Product_To_Cart_And_Checkout() {
+    public void Add_Specific_Product_To_Cart_And_Checkout() {
         log.info("Starting Add_Highest_Priced_Product_To_Cart_And_Checkout");
         ProductsPage productsPage = loginPage.login();
-        productsPage.addHighestPriceProductToCart();
+        productsPage.clickOnProductAddToCartButton(productName);
         CartPage cartPage = productsPage.navigateToCartPage();
         CheckoutYourInformationPage checkoutYourInformationPage = cartPage.navigateToCheckoutPage();
         CheckoutOverviewPage checkoutOverviewPage = checkoutYourInformationPage.fillCheckoutInfo("Albus", "Severus", "9-3/4");

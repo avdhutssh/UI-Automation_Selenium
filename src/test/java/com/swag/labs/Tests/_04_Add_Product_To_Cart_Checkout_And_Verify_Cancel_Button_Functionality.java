@@ -8,7 +8,7 @@ import com.swag.labs.PageObjects.ProductsPage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class _04_Add_Specific_Product_To_Cart_Checkout_And_Verify_Cancel_Button_Functionality extends BaseTest {
+public class _04_Add_Product_To_Cart_Checkout_And_Verify_Cancel_Button_Functionality extends BaseTest {
     String CheckoutOverviewPageTitle = "Checkout: Overview";
 
     @Test
