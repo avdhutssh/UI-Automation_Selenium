@@ -18,10 +18,12 @@ public class ProductsPage extends ElementUtils {
     private WebElement label_productSort;
     @FindBy(xpath = "//button[normalize-space(text())='Add to cart']")
     private List<WebElement> btn_AddToCart;
-
     @FindBy(className = "shopping_cart_link")
     private WebElement label_cart;
-
+    @FindBy(id = "react-burger-menu-btn")
+    private WebElement section_Menu;
+    @FindBy(id = "logout_sidebar_link")
+    private WebElement label_logout;
     private WebDriver driver;
 
     public ProductsPage(WebDriver driver, Logger log) {
@@ -48,10 +50,15 @@ public class ProductsPage extends ElementUtils {
     public String getProductsPageTitle() {
         return waitForElementVisible(this.label_ProductHeader).getText();
     }
-    
+
     public CartPage navigateToCartPage() {
         this.label_cart.click();
         return new CartPage(driver, log);
+    }
+
+    public void logout() {
+        waitForElementVisible(this.section_Menu).click();
+        waitForElementVisible(this.label_logout).click();
     }
 
 }
