@@ -10,6 +10,10 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 public class TestListener implements ITestListener {
 
     ExtentTest test;
@@ -59,10 +63,16 @@ public class TestListener implements ITestListener {
         extentTest.get().log(Status.SKIP, result.getName() + " got skipped");
     }
 
-
     @Override
     public void onFinish(ITestContext context) {
         extentReport.flush();
+        String extentReportPath = System.getProperty("user.dir") + File.separator + "Reports" + File.separator + "extentReport.html";
 
+        File extentReportFile = new File(extentReportPath);
+        try {
+            Desktop.getDesktop().browse(extentReportFile.toURI());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

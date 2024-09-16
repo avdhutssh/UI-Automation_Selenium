@@ -13,11 +13,11 @@ public class ExtentReporter {
 
     public static ExtentReports generateExtentReport() {
         String timestamp = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//        File extentReportFile = new File(System.getProperty("user.dir") + "Reports//extentReport.html");
         File reportsDir = new File(System.getProperty("user.dir") + File.separator + "Reports");
         if (!reportsDir.exists()) {
-            reportsDir.mkdirs(); // Create the Reports directory if it doesn't exist
+            reportsDir.mkdirs();
         }
+//        File extentReportFile = new File(reportsDir + File.separator + timestamp + "_extentReport.html");
         File extentReportFile = new File(reportsDir + File.separator + "extentReport.html");
 
         ExtentReports extentReport = new ExtentReports();
