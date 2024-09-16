@@ -1,7 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-
-<suite name="FullUITestSuite" verbose="1" parallel="tests" thread-count="4">
-    <test name="WholeSuite">
+<suite name="FullUITestSuite">
+    <listeners>
+        <listener class-name="com.swag.labs.BaseComponents.TestListener"/>
+    </listeners>
+    <test name="SmokeSuite">
         <packages>
             <package name="com.swag.labs.Tests"/>
         </packages>

@@ -4,6 +4,7 @@ import com.swag.labs.BaseComponents.BaseTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 
@@ -23,6 +24,17 @@ public class TestUtils extends BaseTest {
         return (new SimpleDateFormat("HHmmssSSS").format(new Date()));
     }
 
+    public static String takeScreenshot(WebDriver driver, String testName) {
+        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String destPath = System.getProperty("user.dir") + File.separator + "Reports" + testName + ".png";
+        try {
+            FileUtils.copyFile(srcFile, new File(destPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return destPath;
+    }
+
     //static sleep
     protected void sleep(long millis) {
         try {
@@ -32,20 +44,9 @@ public class TestUtils extends BaseTest {
         }
     }
 
-    protected void takeScreenshot(String fileName) {
-        File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        String path = System.getProperty("user.dir") + File.separator + "test-output" + File.separator + "screenshots"
-                + File.separator + getTodaysDate() + File.separator + testSuiteName + File.separator + testName
-                + File.separator + testMethodName + File.separator + getSystemTime() + " " + fileName + ".png";
-        try {
-            FileUtils.copyFile(srcFile, new File(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected List<LogEntry> getBrowserLogs() {
         LogEntries log = driver.manage().logs().get("browser");
         return log.getAll();
     }
+
 }
