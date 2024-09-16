@@ -30,6 +30,7 @@ public class ExtentReporter {
 
         Properties prop = new ConfigurationUtils().getProperty();
 
+        extentReport.setSystemInfo("Executed by", "Avdhut Satish Shirgaonkar");
         extentReport.setSystemInfo("Application URL", prop.getProperty("url"));
         extentReport.setSystemInfo("Browser Name", prop.getProperty("browser"));
         extentReport.setSystemInfo("Operating System", System.getProperty("os.name"));
