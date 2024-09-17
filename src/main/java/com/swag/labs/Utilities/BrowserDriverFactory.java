@@ -36,6 +36,7 @@ public class BrowserDriverFactory {
                 log.info("Starting Chrome in Headless mode");
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--headless");
+                chromeOptions.addArguments("--disable-gpu");
                 driver.set(new ChromeDriver(chromeOptions));
                 break;
 
