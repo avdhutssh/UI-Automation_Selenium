@@ -11,6 +11,9 @@ on:
 jobs:
   Selenium-Test:
     runs-on: windows-latest
+    env:
+      browserName: chrome
+      isHeadless: true
 
     steps:
       - name: Checkout code
