@@ -21,10 +21,19 @@ jobs:
     - name: Start Selenium container
       run: docker start selenium_chrome
 
-    - name: Run your tests
+    # Install Java and Maven on the Ubuntu runner
+    - name: Set up Java and Maven
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Install Maven
+      run: sudo apt-get install -y maven
+
+    # Run Maven command to execute tests
+    - name: Run tests with Maven
       run: |
-        # Your test execution logic goes here
-        echo "Running tests"
+        mvn clean test
 
     - name: Stop and remove Selenium container
       run: |
