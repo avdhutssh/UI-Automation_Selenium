@@ -23,12 +23,11 @@ jobs:
         run: choco install chromedriver
 
       - name: Run tests with Maven
-        run: |
-          mvn clean test
+        run: mvn clean test
 
-    - name: Upload Extent Report as artifact
-      if: always()
-      uses: actions/upload-artifact@v3
-      with:
-        name: ExtentReport
-        path: Reports/extentReport.html
+      - name: Upload Extent Report as artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: ExtentReport
+          path: Reports/extentReport.html
