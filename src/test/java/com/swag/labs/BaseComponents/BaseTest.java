@@ -25,14 +25,23 @@ public class BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, ITestContext ctx) {
         log = LogManager.getLogger(testName);
-        String browser = prop.getProperty("browser", "chromeheadless").toLowerCase();
-        boolean isHeadless = Boolean.parseBoolean(prop.getProperty("headless", "false"));
+        String browser = System.getenv("browserName");
+        if (browser == null || browser.isEmpty()) {
+            browser = prop.getProperty("browser", "chrome").toLowerCase();
+        }
+        String isHeadlessEnv = System.getenv("isHeadless");
+        boolean isHeadless = (isHeadlessEnv != null && !isHeadlessEnv.isEmpty())
+                             ? Boolean.parseBoolean(isHeadlessEnv)
+                             : Boolean.parseBoolean(prop.getProperty("headless", "false"));
+
         if (isHeadless) {
             browser += "headless";
         }
+
         BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
         driver = factory.createDriver();
         driver.manage().window().maximize();
+
         this.testName = ctx.getCurrentXmlTest().getName();
         this.testSuiteName = ctx.getSuite().getName();
         this.testMethodName = method.getName();
@@ -42,6 +51,8 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         log.info("Close driver");
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
