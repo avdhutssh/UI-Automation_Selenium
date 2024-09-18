@@ -8,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Java and Maven
         uses: actions/setup-java@v2
@@ -27,7 +27,7 @@ jobs:
           mvn clean test
 
       - name: Upload Extent Report as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ExtentReport
           path: Reports/extentReport.html
