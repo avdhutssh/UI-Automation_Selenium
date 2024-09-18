@@ -16,7 +16,7 @@ jobs:
 
     - name: Create Selenium container
       run: |
-        docker create --name selenium_chrome --network github_network --network-alias selenium -p 4444:4444 --shm-size 2g -e GITHUB_ACTIONS=true -e CI=true selenium/standalone-chrome:latest
+        docker create --name selenium_chrome -p 4444:4444 --shm-size 2g -e GITHUB_ACTIONS=true -e CI=true selenium/standalone-chrome:latest
 
     - name: Start Selenium container
       run: docker start selenium_chrome
