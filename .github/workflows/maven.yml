@@ -26,8 +26,9 @@ jobs:
         run: |
           mvn clean test
 
-      - name: Upload Extent Report as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ExtentReport
-          path: Reports/extentReport.html
+    - name: Upload Extent Report as artifact
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: ExtentReport
+        path: Reports/extentReport.html
