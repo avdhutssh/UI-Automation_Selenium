@@ -7,22 +7,27 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up Java and Maven
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'temurin'
-        java-version: '11'
+      - name: Set up Java and Maven
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "11"
 
-    - name: Install Maven
-      run: choco install maven
+      - name: Install Maven
+        run: choco install maven
 
-    - name: Set up ChromeDriver
-      run: choco install chromedriver
+      - name: Set up ChromeDriver
+        run: choco install chromedriver
 
-    - name: Run tests with Maven
-      run: |
-        mvn clean test
+      - name: Run tests with Maven
+        run: |
+          mvn clean test
 
+      - name: Upload Extent Report as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ExtentReport
+          path: Reports/extentReport.html
