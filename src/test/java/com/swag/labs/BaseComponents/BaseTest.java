@@ -15,25 +15,33 @@ import java.util.Properties;
 
 public class BaseTest {
     public WebDriver driver;
+    public LoginPage loginPage;
     protected Logger log;
     protected String testSuiteName;
     protected String testName;
     protected String testMethodName;
-
     protected Properties prop = new ConfigurationUtils().getProperty();
-    public LoginPage loginPage;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, ITestContext ctx) {
         log = LogManager.getLogger(testName);
-        String browser = prop.getProperty("browser", "chrome").toLowerCase();
-        boolean isHeadless = Boolean.parseBoolean(prop.getProperty("headless", "false"));
+        String browser = System.getenv("browserName");
+        if (browser == null || browser.isEmpty()) {
+            browser = prop.getProperty("browser", "chrome").toLowerCase();
+        }
+        String isHeadlessEnv = System.getenv("isHeadless");
+        boolean isHeadless = (isHeadlessEnv != null && !isHeadlessEnv.isEmpty())
+                             ? Boolean.parseBoolean(isHeadlessEnv)
+                             : Boolean.parseBoolean(prop.getProperty("headless", "false"));
+
         if (isHeadless) {
             browser += "headless";
         }
+
         BrowserDriverFactory factory = new BrowserDriverFactory(browser, log);
         driver = factory.createDriver();
         driver.manage().window().maximize();
+
         this.testName = ctx.getCurrentXmlTest().getName();
         this.testSuiteName = ctx.getSuite().getName();
         this.testMethodName = method.getName();
@@ -43,6 +51,8 @@ public class BaseTest {
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         log.info("Close driver");
-        driver.quit();
+        if (driver != null) {
+            driver.quit();
+        }
     }
 }
