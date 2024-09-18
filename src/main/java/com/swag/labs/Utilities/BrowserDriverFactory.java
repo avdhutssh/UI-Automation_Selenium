@@ -39,6 +39,8 @@ public class BrowserDriverFactory {
                 chromeOptions.addArguments("--disable-gpu");
                 chromeOptions.addArguments("--no-sandbox");
                 chromeOptions.addArguments("--disable-dev-shm-usage");
+                chromeOptions.addArguments("--window-size=1920,1080");  // Set window size
+                chromeOptions.addArguments("--remote-allow-origins=*"); // Prevent CORS issue
                 driver.set(new ChromeDriver(chromeOptions));
                 break;
 

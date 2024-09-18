@@ -21,17 +21,15 @@ jobs:
     - name: Start Selenium container
       run: docker start selenium_chrome
 
-    # Install Java and Maven on the Ubuntu runner
     - name: Set up Java and Maven
       uses: actions/setup-java@v2
       with:
         distribution: 'temurin'
-        java-version: '11'     
+        java-version: '11'
 
     - name: Install Maven
       run: sudo apt-get install -y maven
 
-    # Run Maven command to execute tests
     - name: Run tests with Maven
       run: |
         mvn clean test
