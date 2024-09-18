@@ -15,18 +15,17 @@ import java.util.Properties;
 
 public class BaseTest {
     public WebDriver driver;
+    public LoginPage loginPage;
     protected Logger log;
     protected String testSuiteName;
     protected String testName;
     protected String testMethodName;
-
     protected Properties prop = new ConfigurationUtils().getProperty();
-    public LoginPage loginPage;
 
     @BeforeMethod(alwaysRun = true)
     public void setUp(Method method, ITestContext ctx) {
         log = LogManager.getLogger(testName);
-        String browser = prop.getProperty("browser", "chrome").toLowerCase();
+        String browser = prop.getProperty("browser", "chromeheadless").toLowerCase();
         boolean isHeadless = Boolean.parseBoolean(prop.getProperty("headless", "false"));
         if (isHeadless) {
             browser += "headless";
