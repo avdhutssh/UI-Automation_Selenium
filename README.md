@@ -176,7 +176,7 @@ You can integrate the project with Jenkins for Continuous Integration. Follow th
    ```
 5. After the build, the reports are automatically generated in the `Reports/` folder amd also you can view TestNg reports
 
-![Jenkins](/Misc/Jenkins.PNG)
+![Jenkins-Execution](/Misc/Jenkins.PNG)
 
 ### 2. GitHub Actions
 
