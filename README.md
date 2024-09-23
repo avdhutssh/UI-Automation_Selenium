@@ -159,7 +159,7 @@ To view the generated reports:
 
 You can also capture screenshots for failed test cases and view them in the Extent Report.
 
-![Extent Report](./Misc/ExtentReport.PNG)
+![Extent Report](/Misc/ExtentReport.PNG)
 
 ## 🤖 CI/CD Using Jenkins and GitHub Actions
 
@@ -176,7 +176,7 @@ You can integrate the project with Jenkins for Continuous Integration. Follow th
    ```
 5. After the build, the reports are automatically generated in the `Reports/` folder amd also you can view TestNg reports
 
-![Jenkins](./Misc/Jenkins.PNG)
+![Jenkins](/Misc/Jenkins.PNG)
 
 ### 2. GitHub Actions
 
@@ -186,7 +186,7 @@ This project also uses **GitHub Actions** for CI/CD:
 - It automatically runs the test cases using the TestNG suite on github provided Windows machine and generates the Extent Reports as Artifacts.
 - The results can be viewed in the `Actions` tab of the GitHub repository.
 - Refer workflow yaml file for same. [Workflow file](/.github/workflows/maven.yml)
-  ![GitHub Actions](./Misc/GitHub_Actions.PNG)
+  ![GitHub Actions](/Misc/GitHub_Actions.PNG)
 
 ## 📧 Contacts
 
