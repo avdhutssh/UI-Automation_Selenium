@@ -10,6 +10,7 @@
 # 💻 UI Automation Using Selenium, Java (Maven Project)
 
 ## 📑 Table of Contents
+
 - [Introduction](#introduction)
 - [Prerequisites](#prerequisites)
 - [Project Structure](#project-structure)
@@ -34,12 +35,14 @@ The project supports (CI/CD) pipelines via **Jenkins** and **GitHub Actions**, e
 ## 🛠️ Prerequisites
 
 Before you start, ensure you have the following installed on your machine:
+
 - **Java Development Kit (JDK)**: Version 8 or later.
 - **Maven**: To manage project dependencies.
 - **Git**: To clone the repository.
 - **An IDE**: (such as IntelliJ IDEA or Eclipse) with TestNG plugin installed
 
 For CI/CD:
+
 - **Jenkins**: For automated build and test execution.
 - **GitHub Actions**: Integrated for CI pipeline.
 
@@ -132,6 +135,7 @@ mvn test
 The framework supports data-driven testing using the DataProvider feature in TestNG, with data being sourced from CSV or JSON files.
 
 Example for Incorrect_Login_Attempt test case:
+
 ```bash
     @Test(dataProvider = "csvFileReader", dataProviderClass = CsvDataProviders.class)
     public void _01_Validate_Incorrect_Login_Attempt(Map<String, String> testData) {
@@ -155,7 +159,7 @@ To view the generated reports:
 
 You can also capture screenshots for failed test cases and view them in the Extent Report.
 
-![Extent Report](Misc/ExtentReport.PNG)
+![Extent Report](./Misc/ExtentReport.PNG)
 
 ## 🤖 CI/CD Using Jenkins and GitHub Actions
 
@@ -170,9 +174,9 @@ You can integrate the project with Jenkins for Continuous Integration. Follow th
    ```bash
    test   (mvn test not needed as its a maven dashboard)
    ```
-4. After the build, the reports are automatically generated in the `Reports/` folder amd also you can view TestNg reports
+5. After the build, the reports are automatically generated in the `Reports/` folder amd also you can view TestNg reports
 
-![Jenkins](Misc/Jenkins.PNG)
+![Jenkins](./Misc/Jenkins.PNG)
 
 ### 2. GitHub Actions
 
@@ -182,6 +186,7 @@ This project also uses **GitHub Actions** for CI/CD:
 - It automatically runs the test cases using the TestNG suite on github provided Windows machine and generates the Extent Reports as Artifacts.
 - The results can be viewed in the `Actions` tab of the GitHub repository.
 - Refer workflow yaml file for same. [Workflow file](/.github/workflows/maven.yml)
+  ![GitHub Actions](./Misc/GitHub_Actions.PNG)
 
 ## 📧 Contacts
 
