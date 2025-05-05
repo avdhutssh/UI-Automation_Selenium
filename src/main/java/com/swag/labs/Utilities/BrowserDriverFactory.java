@@ -41,6 +41,13 @@ public class BrowserDriverFactory {
                 chromeOptions.addArguments("--disable-dev-shm-usage");
                 chromeOptions.addArguments("--window-size=1920,1080");  // Set window size
                 chromeOptions.addArguments("--remote-allow-origins=*"); // Prevent CORS issue
+
+                // To Handle password unknown pop-ups
+                final Map<String, Object> chromePrefs = new HashMap<>();
+                chromePrefs.put("credentials_enable_service", false);
+                chromePrefs.put("profile.password_manager_enabled", false);
+                chromePrefs.put("profile.password_manager_leak_detection", false);
+                chromeOptions.setExperimentalOption("prefs", chromePrefs);
                 driver.set(new ChromeDriver(chromeOptions));
                 break;
 
