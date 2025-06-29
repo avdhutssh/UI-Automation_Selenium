@@ -25,24 +25,7 @@ public class BrowserDriverFactory {
 
         switch (browser) {
             case "chrome":
-                driver.set(new ChromeDriver());
-                break;
-
-            case "firefox":
-                driver.set(new FirefoxDriver());
-                break;
-
-            case "chromeheadless":
-                log.info("Starting Chrome in Headless mode");
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.addArguments("--headless");
-                chromeOptions.addArguments("--disable-gpu");
-                chromeOptions.addArguments("--no-sandbox");
-                chromeOptions.addArguments("--disable-dev-shm-usage");
-                chromeOptions.addArguments("--window-size=1920,1080");  // Set window size
-                chromeOptions.addArguments("--remote-allow-origins=*"); // Prevent CORS issue
-
-                // To Handle password unknown pop-ups
                 final Map<String, Object> chromePrefs = new HashMap<>();
                 chromePrefs.put("credentials_enable_service", false);
                 chromePrefs.put("profile.password_manager_enabled", false);
@@ -51,12 +34,33 @@ public class BrowserDriverFactory {
                 driver.set(new ChromeDriver(chromeOptions));
                 break;
 
+            case "firefox":
+                driver.set(new FirefoxDriver());
+                break;
+
+            case "chromeheadless":
+                log.info("Starting Chrome in Headless mode");
+                ChromeOptions headlessChromeOptions = new ChromeOptions();
+                headlessChromeOptions.addArguments("--headless");
+                headlessChromeOptions.addArguments("--disable-gpu");
+                headlessChromeOptions.addArguments("--no-sandbox");
+                headlessChromeOptions.addArguments("--disable-dev-shm-usage");
+                headlessChromeOptions.addArguments("--window-size=1920,1080");  // Set window size
+                headlessChromeOptions.addArguments("--remote-allow-origins=*"); // Prevent CORS issue
+
+                // To Handle password unknown pop-ups
+                final Map<String, Object> headlessChromePrefs = new HashMap<>();
+                headlessChromePrefs.put("credentials_enable_service", false);
+                headlessChromePrefs.put("profile.password_manager_enabled", false);
+                headlessChromePrefs.put("profile.password_manager_leak_detection", false);
+                headlessChromeOptions.setExperimentalOption("prefs", headlessChromePrefs);
+                driver.set(new ChromeDriver(headlessChromeOptions));
+                break;
+
             case "firefoxheadless":
                 log.info("Starting Firefox in Headless mode");
                 FirefoxOptions firefoxOptions = new FirefoxOptions();
                 firefoxOptions.addArguments("--headless");
-                FirefoxOptions options = new FirefoxOptions();
-                options.addArguments("--headless");
                 driver.set(new FirefoxDriver(firefoxOptions));
                 break;
 
